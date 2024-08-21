@@ -4,12 +4,12 @@
 
 body {
   margin: 0;
-  background-color: #333;
+  background-color: hsl(0, 0%, 20%);
   display: flex;
   align-items: center;
   font-size: 3rem;
   flex-direction: column;
-  color: white;
+  color: hsl(0, 0%, 100%);
 }
 
 .title {
@@ -17,7 +17,7 @@ body {
 }
 
 .subtext {
-  color: #ccc;
+  color: hsl(0, 0%, 80%);
   font-size: 1.5rem;
   margin-bottom: 10px;
 }
@@ -25,10 +25,11 @@ body {
 .board {
   display: inline-grid;
   padding: 10px;
-  grid-template-columns: repeat(var(--size), 60px);
-  grid-template-rows: repeat(var(--size), 60px);
+  grid-template-columns: repeat(var(--col-size), calc(60vw / var(--col-size)));
+  grid-template-rows: repeat(var(--row-size), calc(60vh / var(--row-size)));
   gap: 4px;
-  background-color: #777;
+  background-color: hsl(0, 0%, 47%);
+  box-shadow: 0 4px 8px 0 hsl(0, 0%, 20%);
 }
 
 .board > * {
@@ -38,17 +39,17 @@ body {
   justify-content: center;
   align-items: center;
   color: white;
-  border: 2px solid #bbb;
+  border: 2px solid hsl(0, 0%, 73%);
   user-select: none;
 }
 
 .board > [data-status="hidden"] {
-  background-color: #bbb;
+  background-color: hsl(0, 0%, 73%);
   cursor: pointer;
 }
 
 .board > [data-status="mine"] {
-  background-color: red;
+  background-color: hsl(0, 100%, 50%);
 }
 
 .board > [data-status="number"] {
@@ -56,7 +57,7 @@ body {
 }
 
 .board > [data-status="marked"] {
-  background-color: yellow;
+  background-color: hsl(60, 100%, 50%);
 }
 
 [data-mine-count] {
@@ -79,5 +80,48 @@ body {
   align-items: center;
 }
 
+.difficulty-button {
+  height: 10vh;
+  width: 25vw;
+  margin: 2vw;
+  margin-top: 10vh;
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px 0 hsl(0, 0%, 20%);
+  cursor: pointer;
+}
+
+[data-level="easy"] {
+  background-color: hsl(120, 50%, 50%);
+  color: hsl(120, 50%, 20%);
+  transition: background-color 0.2s, color 0.2s;
+}
+
+[data-level="medium"] {
+  background-color: hsl(60, 50%, 50%);
+  color: hsl(60, 50%, 20%);
+  transition: background-color 0.2s, color 0.2s;
+}
+
+[data-level="hard"] {
+  background-color: hsl(0, 50%, 50%);
+  color: hsl(0, 50%, 20%);
+  transition: background-color 0.2s, color 0.2s;
+}
+
+[data-level="easy"]:hover {
+  background-color: hsl(120, 50%, 40%);
+  color: hsl(120, 50%, 80%);
+}
+
+[data-level="medium"]:hover {
+  background-color: hsl(60, 50%, 40%);
+  color: hsl(60, 50%, 80%);
+}
+
+[data-level="hard"]:hover {
+  background-color: hsl(0, 50%, 40%);
+  color: hsl(0, 50%, 80%);
+}
 /** The gameboard can extend to a certain extent, then all elements should be made smaller
 ** based on the overall grid size */

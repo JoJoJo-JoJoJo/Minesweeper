@@ -9,13 +9,15 @@ export const tileStatuses = {
 
 //TODO: Populate a board with tiles/mines --> DONE.
 
-export function createBoard(boardSize, totalMines) {
-  const board = [];
-  const minePositions = getMinePositions(boardSize, totalMines);
+//* USE OPTIONAL CHAINING ('?.') FOR HARD DIFFICULTY.
 
-  for (let x = 0; x < boardSize; x++) {
+export function createBoard(currentBoardSize, totalMines) {
+  const board = [];
+  const minePositions = getMinePositions(currentBoardSize, totalMines);
+
+  for (let x = 0; x < currentBoardSize; x++) {
     const row = [];
-    for (let y = 0; y < boardSize; y++) {
+    for (let y = 0; y < currentBoardSize; y++) {
       const element = document.createElement("div");
       element.dataset.status = tileStatuses.hidden;
 
@@ -94,13 +96,13 @@ export function checkLose(board) {
   });
 }
 
-function getMinePositions(boardSize, totalMines) {
+function getMinePositions(currentBoardSize, totalMines) {
   const positions = [];
 
   while (positions.length < totalMines) {
     const position = {
-      x: randomNumber(boardSize),
-      y: randomNumber(boardSize),
+      x: randomNumber(currentBoardSize),
+      y: randomNumber(currentBoardSize),
     };
 
     if (!positions.some((p) => positionMatch(p, position))) {

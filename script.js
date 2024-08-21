@@ -12,15 +12,42 @@ import {
   checkLose,
 } from "./logic.js";
 
-const boardSize = 9;
+/* If I set a variable that contains the value of a difficulty, then the 3 buttons change
+that value. */
+/* This didn't quite solve the problem, need to recreate the board to change difficulties,
+and then edit the 'logic.js' file to work with the differing cols and rows on hard mode. */
+
+const boardSize = {
+  easy: 9,
+  medium: 16,
+  hard: {
+    cols: 32,
+    rows: 16,
+  },
+};
+let currentBoardSize = boardSize.easy;
 const totalMines = 10;
 
-const board = createBoard(boardSize, totalMines);
+const easyBtn = document.getElementById("difficulty-easy");
+const mediumBtn = document.getElementById("difficulty-medium");
+const hardBtn = document.getElementById("difficulty-hard");
+
+easyBtn.addEventListener("click", () => {
+  currentBoardSize = boardSize.easy;
+});
+
+mediumBtn.addEventListener("click", () => {
+  currentBoardSize = boardSize.medium;
+});
+
+hardBtn.addEventListener("click", () => {
+  currentBoardSize = boardSize.hard;
+});
+
+const board = createBoard(currentBoardSize, totalMines);
 const boardElement = document.querySelector(".board");
 const minesRemainingText = document.querySelector("[data-mine-count]");
 const gameMsg = document.querySelector(".subtext");
-
-console.log(board);
 
 board.forEach((row) => {
   row.forEach((tile) => {
@@ -36,7 +63,8 @@ board.forEach((row) => {
     }); //TODO: Right click on tiles - mark tiles --> DONE.
   });
 });
-boardElement.style.setProperty("--size", boardSize);
+boardElement.style.setProperty("--col-size", currentBoardSize);
+boardElement.style.setProperty("--row-size", currentBoardSize);
 minesRemainingText.textContent = totalMines;
 
 function listMinesRemaining() {
