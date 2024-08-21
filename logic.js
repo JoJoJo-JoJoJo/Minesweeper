@@ -7,6 +7,8 @@ export const tileStatuses = {
   marked: "marked",
 };
 
+//TODO: Populate a board with tiles/mines --> DONE.
+
 export function createBoard(boardSize, totalMines) {
   const board = [];
   const minePositions = getMinePositions(boardSize, totalMines);

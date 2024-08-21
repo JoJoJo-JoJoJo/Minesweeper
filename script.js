@@ -1,3 +1,8 @@
+//* Display / UI
+
+//TODO: Give each number a relative color (i.e. blue for 1, green for 2, etc.).
+//TODO: Make different set difficulties that the user can choose from, e.g. Easy, medium, hard.
+
 import {
   createBoard,
   markTile,
@@ -7,11 +12,7 @@ import {
   checkLose,
 } from "./logic.js";
 
-//* Display / UI
-
-//TODO: Populate a board with tiles/mines --> DONE.
-
-const boardSize = 10;
+const boardSize = 9;
 const totalMines = 10;
 
 const board = createBoard(boardSize, totalMines);
@@ -76,7 +77,3 @@ function checkGameEnd() {
 function stopPropagation(e) {
   e.stopImmediatePropagation();
 }
-
-//! THINGS TO DO AS FUTURE ADDITIONS:
-//!   -> Give each number a relative color (i.e. blue for 1, green for 2, etc.)
-//!   -> Make different set difficulties that the user can choose from, e.g. Easy, medium, hard.

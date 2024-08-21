@@ -62,3 +62,22 @@ body {
 [data-mine-count] {
   font-size: 1.2em;
 }
+
+.button {
+  all: unset;
+}
+
+.button:focus {
+  outline: revert;
+}
+
+.difficulties {
+  height: 15vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+/** The gameboard can extend to a certain extent, then all elements should be made smaller
+** based on the overall grid size */
