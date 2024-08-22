@@ -11,9 +11,11 @@ export const tileStatuses = {
 
 //* USE OPTIONAL CHAINING ('?.') FOR HARD DIFFICULTY.
 
-export function createBoard(currentBoardSize, totalMines) {
+export function createBoard(currentBoardSize, currentTotalMines) {
   const board = [];
-  const minePositions = getMinePositions(currentBoardSize, totalMines);
+  const difficultyScalingX = currentBoardSize?.cols != null ? currentBoardSize.cols : currentBoardSize;
+  const difficultyScalingY = currentBoardSize?.rows != null ? currentBoardSize.rows : currentBoardSize;
+  const minePositions = getMinePositions(difficultyScalingX, difficultyScalingY, currentTotalMines);
 
   for (let x = 0; x < currentBoardSize; x++) {
     const row = [];
@@ -96,13 +98,13 @@ export function checkLose(board) {
   });
 }
 
-function getMinePositions(currentBoardSize, totalMines) {
+function getMinePositions(difficultyScalingX, difficultyScalingY, currentTotalMines) {
   const positions = [];
 
-  while (positions.length < totalMines) {
+  while (positions.length < currentTotalMines) {
     const position = {
-      x: randomNumber(currentBoardSize),
-      y: randomNumber(currentBoardSize),
+      x: randomNumber(difficultyScalingX),
+      y: randomNumber(difficultyScalingY),
     };
 
     if (!positions.some((p) => positionMatch(p, position))) {

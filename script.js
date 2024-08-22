@@ -26,7 +26,13 @@ const boardSize = {
   },
 };
 let currentBoardSize = boardSize.easy;
-const totalMines = 10;
+
+const totalMines = {
+  easy: 10,
+  medium: 40,
+  hard: 100,
+};
+let currentTotalMines = totalMines.easy;
 
 const easyBtn = document.getElementById("difficulty-easy");
 const mediumBtn = document.getElementById("difficulty-medium");
@@ -34,17 +40,20 @@ const hardBtn = document.getElementById("difficulty-hard");
 
 easyBtn.addEventListener("click", () => {
   currentBoardSize = boardSize.easy;
+  currentTotalMines = totalMines.easy;
 });
 
 mediumBtn.addEventListener("click", () => {
   currentBoardSize = boardSize.medium;
+  currentTotalMines = totalMines.medium;
 });
 
 hardBtn.addEventListener("click", () => {
   currentBoardSize = boardSize.hard;
+  currentTotalMines = totalMines.hard;
 });
 
-const board = createBoard(currentBoardSize, totalMines);
+const board = createBoard(currentBoardSize, currentTotalMines);
 const boardElement = document.querySelector(".board");
 const minesRemainingText = document.querySelector("[data-mine-count]");
 const gameMsg = document.querySelector(".subtext");
@@ -65,7 +74,13 @@ board.forEach((row) => {
 });
 boardElement.style.setProperty("--col-size", currentBoardSize);
 boardElement.style.setProperty("--row-size", currentBoardSize);
-minesRemainingText.textContent = totalMines;
+const colSize = boardElement.style.getPropertyValue("--col-size");
+const rowSize = boardElement.style.getPropertyValue("--row-size");
+boardElement.style.setProperty(
+  "--font-size",
+  colSize >= rowSize ? colSize : rowSize
+);
+minesRemainingText.textContent = currentTotalMines;
 
 function listMinesRemaining() {
   const markedTilesCount = board.reduce((count, row) => {
@@ -74,7 +89,7 @@ function listMinesRemaining() {
     );
   }, 0);
 
-  minesRemainingText.textContent = totalMines - markedTilesCount;
+  minesRemainingText.textContent = currentTotalMines - markedTilesCount;
 }
 
 function checkGameEnd() {

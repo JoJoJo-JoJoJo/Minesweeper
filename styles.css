@@ -13,21 +13,25 @@ body {
 }
 
 .title {
-  margin: 20px;
+  margin: 15px;
 }
 
 .subtext {
   color: hsl(0, 0%, 80%);
   font-size: 1.5rem;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .board {
   display: inline-grid;
   padding: 10px;
-  grid-template-columns: repeat(var(--col-size), calc(60vw / var(--col-size)));
-  grid-template-rows: repeat(var(--row-size), calc(60vh / var(--row-size)));
-  gap: 4px;
+  /* *Check whether there are more cols or rows, then make the font-size responsive based on
+  *the bigger number */
+  grid-template-columns: repeat(var(--col-size), calc(64vw / var(--col-size)));
+  grid-template-rows: repeat(var(--row-size), calc(64vh / var(--row-size)));
+  /* *Will probably need to change column sizing for hard difficulty */
+  gap: calc(4px * (9 / var(--col-size)));
+  font-size: calc(3rem * (9 / var(--font-size)));
   background-color: hsl(0, 0%, 47%);
   box-shadow: 0 4px 8px 0 hsl(0, 0%, 20%);
 }
@@ -38,7 +42,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: hsl(0, 0%, 100%);
   border: 2px solid hsl(0, 0%, 73%);
   user-select: none;
 }
@@ -73,7 +77,7 @@ body {
 }
 
 .difficulties {
-  height: 15vh;
+  height: 8vh;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -81,7 +85,7 @@ body {
 }
 
 .difficulty-button {
-  height: 10vh;
+  height: 120%;
   width: 25vw;
   margin: 2vw;
   margin-top: 10vh;
