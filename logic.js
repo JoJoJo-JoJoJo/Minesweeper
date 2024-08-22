@@ -72,11 +72,13 @@ export function revealTile(board, tile) {
   tile.status = tileStatuses.number;
   const adjacentTiles = nearbyTiles(board, tile);
   const mines = adjacentTiles.filter((tile) => tile.mine);
+  // tile.element.setProperty("--tile-color", (mines.length * 45) % 360);
   if (mines.length === 0) {
     adjacentTiles.forEach(revealTile.bind(null, board));
   } else {
     tile.element.textContent = mines.length;
   }
+  return mines.length;
 }
 
 export function checkWin(board) {

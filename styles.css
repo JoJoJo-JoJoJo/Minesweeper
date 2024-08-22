@@ -31,6 +31,7 @@ body {
   font-size: calc(3rem * (9 / var(--font-size)));
   background-color: hsl(0, 0%, 47%);
   box-shadow: 0 4px 8px 0 hsl(0, 0%, 20%);
+  color: hsl(var(--tile-color), 50%, 50%);
 }
 
 .rectangle {
@@ -43,8 +44,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: hsl(var(--tile-color), 50%, 50%);
-  border: 0.2em solid hsl(0, 0%, 73%);
+  /* color: hsl(var(--tile-color), 50%, 50%); */
+  border: min(0.2em, 2px) solid hsl(0, 0%, 73%);
   user-select: none;
 }
 
@@ -129,5 +130,3 @@ body {
   background-color: hsl(0, 50%, 40%);
   color: hsl(0, 50%, 80%);
 }
-/** The gameboard can extend to a certain extent, then all elements should be made smaller
-** based on the overall grid size */

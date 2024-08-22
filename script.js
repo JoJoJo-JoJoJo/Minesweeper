@@ -29,18 +29,31 @@ const totalMines = {
 /*
  * If I had made an object for each difficulty and given them boardSize and totalMines
  * properties rather than the other way around this would've been easier, but I didn't as
- * I built this game without the intention of extending it, so here we are.
+ * when I began this project I didn't have the intention of extending it, and it still works
+ * without the change.
  */
 
 let currentBoardSize;
-let currentTotalMines;
+let currentTotalMines = 10;
 
-currentBoardSize = currentBoardSize
-  ? localStorage.getItem("newDifficulty").JSON.parse(NEW_BOARD_SIZE)
+currentBoardSize = localStorage.getItem("newDifficulty")
+  ? JSON.parse(localStorage.getItem("newDifficulty"))
   : boardSize.easy;
-currentTotalMines = currentTotalMines
-  ? localStorage.getItem("newDifficulty").JSON.parse(NEW_TOTAL_MINES)
-  : totalMines.easy;
+
+switch (JSON.parse(localStorage.getItem("newDifficulty"))) {
+  case boardSize.easy:
+    currentTotalMines = totalMines.easy;
+    break;
+  case boardSize.medium:
+    currentTotalMines = totalMines.medium;
+    break;
+  case boardSize.hard:
+    currentTotalMines = totalMines.hard;
+    break;
+}
+
+console.log(currentBoardSize);
+console.log(currentTotalMines);
 
 const easyBtn = document.getElementById("difficulty-easy");
 const mediumBtn = document.getElementById("difficulty-medium");
@@ -49,42 +62,21 @@ const hardBtn = document.getElementById("difficulty-hard");
 easyBtn.addEventListener("click", () => {
   currentBoardSize = boardSize.easy;
   currentTotalMines = totalMines.easy;
-  localStorage.setItem(
-    "newDifficulty",
-    JSON.stringify({
-      NEW_BOARD_SIZE: 9,
-      NEW_TOTAL_MINES: 10,
-    })
-  );
+  localStorage.setItem("newDifficulty", JSON.stringify(boardSize.easy));
   location.replace(location.href);
 });
 
 mediumBtn.addEventListener("click", () => {
   currentBoardSize = boardSize.medium;
   currentTotalMines = totalMines.medium;
-  localStorage.setItem(
-    "newDifficulty",
-    JSON.stringify({
-      NEW_BOARD_SIZE: 16,
-      NEW_TOTAL_MINES: 40,
-    })
-  );
+  localStorage.setItem("newDifficulty", JSON.stringify(boardSize.medium));
   location.replace(location.href);
 });
 
 hardBtn.addEventListener("click", () => {
   currentBoardSize = boardSize.hard;
   currentTotalMines = totalMines.hard;
-  localStorage.setItem(
-    "newDifficulty",
-    JSON.stringify({
-      NEW_BOARD_SIZE: {
-        cols: 32,
-        rows: 16,
-      },
-      NEW_TOTAL_MINES: 100,
-    })
-  );
+  localStorage.setItem("newDifficulty", JSON.stringify(boardSize.hard));
   location.replace(location.href);
 });
 
@@ -115,7 +107,7 @@ board.forEach((row) => {
     boardElement.append(tile.element);
     tile.element.addEventListener("click", () => {
       revealTile(board, tile);
-      // tile.element.setProperty("--tile-color", (mines.length * 45) % 360);
+      tile.element.style.setProperty("--tile-color", (mines.length * 45) % 360);
       checkGameEnd();
     });
     tile.element.addEventListener("contextmenu", (e) => {
