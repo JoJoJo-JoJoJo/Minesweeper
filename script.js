@@ -21,11 +21,11 @@ const boardSize = {
   easy: 9,
   medium: 16,
   hard: {
-    cols: 32,
-    rows: 16,
+    cols: 32, // This is the 'x' value
+    rows: 16, // This is the 'y' value
   },
 };
-let currentBoardSize = boardSize.easy;
+let currentBoardSize = boardSize.hard;
 
 const totalMines = {
   easy: 10,
@@ -33,6 +33,8 @@ const totalMines = {
   hard: 100,
 };
 let currentTotalMines = totalMines.easy;
+
+//* Easy and medium modes work, doing hard mode currently.
 
 const easyBtn = document.getElementById("difficulty-easy");
 const mediumBtn = document.getElementById("difficulty-medium");
@@ -54,15 +56,23 @@ hardBtn.addEventListener("click", () => {
 });
 
 const board = createBoard(currentBoardSize, currentTotalMines);
-const boardElement = document.querySelector(".board");
+const boardElement = document.querySelector("[data-board]");
 const minesRemainingText = document.querySelector("[data-mine-count]");
-const gameMsg = document.querySelector(".subtext");
+const gameMsg = document.querySelector("[data-subtext]");
+
+/*
+ * Need to check if each tile contains a number and is revealed, if so set that tile's
+ * color property ("--tile-color") relative to the number in the tile.
+ * Could do this by giving every tile a data-mines-around value, and then changing the color
+ * by retrieving the property of the mine.
+ */
 
 board.forEach((row) => {
   row.forEach((tile) => {
     boardElement.append(tile.element);
     tile.element.addEventListener("click", () => {
       revealTile(board, tile);
+      // tile.element.setProperty("--tile-color", (mines.length * 45) % 360);
       checkGameEnd();
     }); //TODO: Left click on tiles - reveal tiles --> DONE.
     tile.element.addEventListener("contextmenu", (e) => {
@@ -72,8 +82,20 @@ board.forEach((row) => {
     }); //TODO: Right click on tiles - mark tiles --> DONE.
   });
 });
-boardElement.style.setProperty("--col-size", currentBoardSize);
-boardElement.style.setProperty("--row-size", currentBoardSize);
+
+if (currentBoardSize?.cols && currentBoardSize?.rows) {
+  boardElement.style.setProperty("--col-size", currentBoardSize.cols);
+  boardElement.style.setProperty("--row-size", currentBoardSize.rows);
+} else {
+  boardElement.style.setProperty("--col-size", currentBoardSize);
+  boardElement.style.setProperty("--row-size", currentBoardSize);
+}
+
+/*
+ * Checks if the board size of the current difficulty has seperate 'cols' and 'rows'
+ * properties, and if so sets the css variables to the different values.
+ */
+
 const colSize = boardElement.style.getPropertyValue("--col-size");
 const rowSize = boardElement.style.getPropertyValue("--row-size");
 boardElement.style.setProperty(

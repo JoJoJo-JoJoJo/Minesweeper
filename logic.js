@@ -9,17 +9,21 @@ export const tileStatuses = {
 
 //TODO: Populate a board with tiles/mines --> DONE.
 
-//* USE OPTIONAL CHAINING ('?.') FOR HARD DIFFICULTY.
-
 export function createBoard(currentBoardSize, currentTotalMines) {
   const board = [];
-  const difficultyScalingX = currentBoardSize?.cols != null ? currentBoardSize.cols : currentBoardSize;
-  const difficultyScalingY = currentBoardSize?.rows != null ? currentBoardSize.rows : currentBoardSize;
-  const minePositions = getMinePositions(difficultyScalingX, difficultyScalingY, currentTotalMines);
+  const difficultyScalingX =
+    currentBoardSize?.cols != null ? currentBoardSize.cols : currentBoardSize;
+  const difficultyScalingY =
+    currentBoardSize?.rows != null ? currentBoardSize.rows : currentBoardSize;
+  const minePositions = getMinePositions(
+    difficultyScalingX,
+    difficultyScalingY,
+    currentTotalMines
+  );
 
-  for (let x = 0; x < currentBoardSize; x++) {
+  for (let x = 0; x < difficultyScalingX; x++) {
     const row = [];
-    for (let y = 0; y < currentBoardSize; y++) {
+    for (let y = 0; y < difficultyScalingY; y++) {
       const element = document.createElement("div");
       element.dataset.status = tileStatuses.hidden;
 
@@ -98,7 +102,11 @@ export function checkLose(board) {
   });
 }
 
-function getMinePositions(difficultyScalingX, difficultyScalingY, currentTotalMines) {
+function getMinePositions(
+  difficultyScalingX,
+  difficultyScalingY,
+  currentTotalMines
+) {
   const positions = [];
 
   while (positions.length < currentTotalMines) {
