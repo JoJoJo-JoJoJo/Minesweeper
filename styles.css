@@ -25,38 +25,17 @@ body {
 .board {
   display: inline-grid;
   padding: 10px;
-  /* *Check whether there are more cols or rows, then make the font-size responsive based on
-  *the bigger number */
   grid-template-columns: repeat(var(--col-size), calc(64vw / var(--col-size)));
   grid-template-rows: repeat(var(--row-size), calc(64vh / var(--row-size)));
-  /* *Will probably need to change column sizing for hard difficulty */
   gap: calc(4px * (9 / var(--col-size)));
   font-size: calc(3rem * (9 / var(--font-size)));
   background-color: hsl(0, 0%, 47%);
   box-shadow: 0 4px 8px 0 hsl(0, 0%, 20%);
 }
 
-/* @media only screen and (--col-size >= (--row-size * 2)) {
-  .board {
-    grid-template-columns: repeat(
-      var(--col-size),
-      calc(80vw / var(--col-size))
-    );
-    grid-template-rows: repeat(
-      var(--row-size),
-      calc(40vh / var(--row-size))
-    );
-    gap: calc(4px * (9 / var(--row-size)));
-  }
-
-  .board > * {
-    border: 1px solid hsl(0, 0%, 73%);
-  }
-} */
-
-/*
- * Rewrite this media query in JS.
-*/
+.rectangle {
+  grid-template-columns: repeat(var(--col-size), calc(80vw / var(--col-size)));
+}
 
 .board > * {
   width: 100%;
@@ -65,7 +44,7 @@ body {
   justify-content: center;
   align-items: center;
   color: hsl(var(--tile-color), 50%, 50%);
-  border: 2px solid hsl(0, 0%, 73%);
+  border: 0.2em solid hsl(0, 0%, 73%);
   user-select: none;
 }
 

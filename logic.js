@@ -7,8 +7,6 @@ export const tileStatuses = {
   marked: "marked",
 };
 
-//TODO: Populate a board with tiles/mines --> DONE.
-
 export function createBoard(currentBoardSize, currentTotalMines) {
   const board = [];
   const difficultyScalingX =

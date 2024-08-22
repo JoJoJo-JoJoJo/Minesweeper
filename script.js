@@ -1,7 +1,6 @@
 //* Display / UI
 
 //TODO: Give each number a relative color (i.e. blue for 1, green for 2, etc.).
-//TODO: Make different set difficulties that the user can choose from, e.g. Easy, medium, hard.
 
 import {
   createBoard,
@@ -12,11 +11,6 @@ import {
   checkLose,
 } from "./logic.js";
 
-/* If I set a variable that contains the value of a difficulty, then the 3 buttons change
-that value. */
-/* This didn't quite solve the problem, need to recreate the board to change difficulties,
-and then edit the 'logic.js' file to work with the differing cols and rows on hard mode. */
-
 const boardSize = {
   easy: 9,
   medium: 16,
@@ -25,16 +19,28 @@ const boardSize = {
     rows: 16, // This is the 'y' value
   },
 };
-let currentBoardSize = boardSize.hard;
 
 const totalMines = {
   easy: 10,
   medium: 40,
   hard: 100,
 };
-let currentTotalMines = totalMines.easy;
 
-//* Easy and medium modes work, doing hard mode currently.
+/*
+ * If I had made an object for each difficulty and given them boardSize and totalMines
+ * properties rather than the other way around this would've been easier, but I didn't as
+ * I built this game without the intention of extending it, so here we are.
+ */
+
+let currentBoardSize;
+let currentTotalMines;
+
+currentBoardSize = currentBoardSize
+  ? localStorage.getItem("newDifficulty").JSON.parse(NEW_BOARD_SIZE)
+  : boardSize.easy;
+currentTotalMines = currentTotalMines
+  ? localStorage.getItem("newDifficulty").JSON.parse(NEW_TOTAL_MINES)
+  : totalMines.easy;
 
 const easyBtn = document.getElementById("difficulty-easy");
 const mediumBtn = document.getElementById("difficulty-medium");
@@ -43,20 +49,57 @@ const hardBtn = document.getElementById("difficulty-hard");
 easyBtn.addEventListener("click", () => {
   currentBoardSize = boardSize.easy;
   currentTotalMines = totalMines.easy;
+  localStorage.setItem(
+    "newDifficulty",
+    JSON.stringify({
+      NEW_BOARD_SIZE: 9,
+      NEW_TOTAL_MINES: 10,
+    })
+  );
+  location.replace(location.href);
 });
 
 mediumBtn.addEventListener("click", () => {
   currentBoardSize = boardSize.medium;
   currentTotalMines = totalMines.medium;
+  localStorage.setItem(
+    "newDifficulty",
+    JSON.stringify({
+      NEW_BOARD_SIZE: 16,
+      NEW_TOTAL_MINES: 40,
+    })
+  );
+  location.replace(location.href);
 });
 
 hardBtn.addEventListener("click", () => {
   currentBoardSize = boardSize.hard;
   currentTotalMines = totalMines.hard;
+  localStorage.setItem(
+    "newDifficulty",
+    JSON.stringify({
+      NEW_BOARD_SIZE: {
+        cols: 32,
+        rows: 16,
+      },
+      NEW_TOTAL_MINES: 100,
+    })
+  );
+  location.replace(location.href);
 });
 
-const board = createBoard(currentBoardSize, currentTotalMines);
 const boardElement = document.querySelector("[data-board]");
+
+if (currentBoardSize?.cols && currentBoardSize?.rows) {
+  boardElement.style.setProperty("--col-size", currentBoardSize.cols);
+  boardElement.style.setProperty("--row-size", currentBoardSize.rows);
+  boardElement.classList.add("rectangle");
+} else {
+  boardElement.style.setProperty("--col-size", currentBoardSize);
+  boardElement.style.setProperty("--row-size", currentBoardSize);
+}
+
+const board = createBoard(currentBoardSize, currentTotalMines);
 const minesRemainingText = document.querySelector("[data-mine-count]");
 const gameMsg = document.querySelector("[data-subtext]");
 
@@ -74,27 +117,14 @@ board.forEach((row) => {
       revealTile(board, tile);
       // tile.element.setProperty("--tile-color", (mines.length * 45) % 360);
       checkGameEnd();
-    }); //TODO: Left click on tiles - reveal tiles --> DONE.
+    });
     tile.element.addEventListener("contextmenu", (e) => {
       e.preventDefault();
       markTile(tile);
       listMinesRemaining();
-    }); //TODO: Right click on tiles - mark tiles --> DONE.
+    });
   });
 });
-
-if (currentBoardSize?.cols && currentBoardSize?.rows) {
-  boardElement.style.setProperty("--col-size", currentBoardSize.cols);
-  boardElement.style.setProperty("--row-size", currentBoardSize.rows);
-} else {
-  boardElement.style.setProperty("--col-size", currentBoardSize);
-  boardElement.style.setProperty("--row-size", currentBoardSize);
-}
-
-/*
- * Checks if the board size of the current difficulty has seperate 'cols' and 'rows'
- * properties, and if so sets the css variables to the different values.
- */
 
 const colSize = boardElement.style.getPropertyValue("--col-size");
 const rowSize = boardElement.style.getPropertyValue("--row-size");
@@ -137,7 +167,7 @@ function checkGameEnd() {
       });
     });
   }
-} //TODO: Check for win/loss --> DONE.
+}
 
 function stopPropagation(e) {
   e.stopImmediatePropagation();
