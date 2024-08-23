@@ -1,7 +1,5 @@
 //* Display / UI
 
-//TODO: Give each number a relative color (i.e. blue for 1, green for 2, etc.).
-
 import {
   createBoard,
   markTile,
@@ -26,13 +24,6 @@ const totalMines = {
   hard: 100,
 };
 
-/*
- * If I had made an object for each difficulty and given them boardSize and totalMines
- * properties rather than the other way around this would've been easier, but I didn't as
- * when I began this project I didn't have the intention of extending it, and it still works
- * without the change.
- */
-
 let currentBoardSize;
 let currentTotalMines = 10;
 
@@ -52,13 +43,14 @@ switch (JSON.parse(sessionStorage.getItem("newDifficulty"))) {
     break;
 }
 
-console.log(currentBoardSize);   //! ------------------------------------------------------ !
-console.log(currentTotalMines);  //! ------------------------------------------------------ !
-console.log(JSON.parse(sessionStorage.getItem("newDifficulty")));  //! -------------------- !
+console.log(currentBoardSize); //! ------------------------------------------------------- !
+console.log(currentTotalMines); //! ------------------------------------------------------ !
+console.log(JSON.parse(sessionStorage.getItem("newDifficulty"))); //! -------------------- !
 
 const easyBtn = document.getElementById("difficulty-easy");
 const mediumBtn = document.getElementById("difficulty-medium");
 const hardBtn = document.getElementById("difficulty-hard");
+const btnContainer = easyBtn.parentElement;
 
 easyBtn.addEventListener("click", () => {
   sessionStorage.setItem("newDifficulty", JSON.stringify(boardSize.easy));
@@ -81,6 +73,7 @@ if (currentBoardSize?.cols && currentBoardSize?.rows) {
   boardElement.style.setProperty("--col-size", currentBoardSize.cols);
   boardElement.style.setProperty("--row-size", currentBoardSize.rows);
   boardElement.classList.add("rectangle");
+  btnContainer.classList.add("rectangle-extra-margin-top");
 } else {
   boardElement.style.setProperty("--col-size", currentBoardSize);
   boardElement.style.setProperty("--row-size", currentBoardSize);
@@ -89,13 +82,6 @@ if (currentBoardSize?.cols && currentBoardSize?.rows) {
 const board = createBoard(currentBoardSize, currentTotalMines);
 const minesRemainingText = document.querySelector("[data-mine-count]");
 const gameMsg = document.querySelector("[data-subtext]");
-
-/*
- * Need to check if each tile contains a number and is revealed, if so set that tile's
- * color property ("--tile-color") relative to the number in the tile.
- * Could do this by giving every tile a data-mines-around value, and then changing the color
- * by retrieving the property of the mine.
- */
 
 board.forEach((row) => {
   row.forEach((tile) => {

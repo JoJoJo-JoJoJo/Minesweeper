@@ -46,9 +46,6 @@ export function createBoard(currentBoardSize, currentTotalMines) {
   return board;
 }
 
-//* The board will be a 2D array.
-// [[{ x: 0, y: 0 }, { x: 0, y: 1 }], [{ x: 1, y: 0 }, { x: 1, y: 1 }]] would be a 2x2 board.
-
 export function markTile(tile) {
   if (
     tile.status !== tileStatuses.hidden &&
@@ -72,7 +69,6 @@ export function revealTile(board, tile) {
   tile.status = tileStatuses.number;
   const adjacentTiles = nearbyTiles(board, tile);
   const mines = adjacentTiles.filter((tile) => tile.mine);
-  // tile.element.setProperty("--tile-color", (mines.length * 45) % 360);
   if (mines.length === 0) {
     adjacentTiles.forEach(revealTile.bind(null, board));
   } else {

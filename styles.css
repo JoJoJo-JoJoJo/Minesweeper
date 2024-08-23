@@ -35,7 +35,8 @@ body {
 }
 
 .rectangle {
-  grid-template-columns: repeat(var(--col-size), calc(80vw / var(--col-size)));
+  grid-template-columns: repeat(var(--col-size), calc(90vw / var(--col-size)));
+  grid-template-rows: repeat(var(--row-size), calc(45vh / var(--row-size)));
 }
 
 .board > * {
@@ -44,7 +45,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* color: hsl(var(--tile-color), 50%, 50%); */
   border: min(0.2em, 2px) solid hsl(0, 0%, 73%);
   user-select: none;
 }
@@ -85,6 +85,10 @@ body {
   justify-content: center;
   align-items: center;
   margin-top: 3vh;
+}
+
+.rectangle-extra-margin-top {
+  margin-top: 24vh;
 }
 
 .difficulty-button {
