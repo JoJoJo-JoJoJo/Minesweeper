@@ -31,7 +31,7 @@ body {
   font-size: calc(3rem * (9 / var(--font-size)));
   background-color: hsl(0, 0%, 47%);
   box-shadow: 0 4px 8px 0 hsl(0, 0%, 20%);
-  color: hsl(var(--tile-color), 50%, 50%);
+  color: hsl(0, 0%, 100%);
 }
 
 .rectangle {
@@ -60,7 +60,6 @@ body {
 
 .board > [data-status="number"] {
   background: none;
-  color: hsl(var(--tile-color), 50%, 50%);
 }
 
 .board > [data-status="marked"] {

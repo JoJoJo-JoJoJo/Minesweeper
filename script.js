@@ -36,11 +36,11 @@ const totalMines = {
 let currentBoardSize;
 let currentTotalMines = 10;
 
-currentBoardSize = localStorage.getItem("newDifficulty")
-  ? JSON.parse(localStorage.getItem("newDifficulty"))
+currentBoardSize = sessionStorage.getItem("newDifficulty")
+  ? JSON.parse(sessionStorage.getItem("newDifficulty"))
   : boardSize.easy;
 
-switch (JSON.parse(localStorage.getItem("newDifficulty"))) {
+switch (JSON.parse(sessionStorage.getItem("newDifficulty"))) {
   case boardSize.easy:
     currentTotalMines = totalMines.easy;
     break;
@@ -52,31 +52,26 @@ switch (JSON.parse(localStorage.getItem("newDifficulty"))) {
     break;
 }
 
-console.log(currentBoardSize);
-console.log(currentTotalMines);
+console.log(currentBoardSize);   //! ------------------------------------------------------ !
+console.log(currentTotalMines);  //! ------------------------------------------------------ !
+console.log(JSON.parse(sessionStorage.getItem("newDifficulty")));  //! -------------------- !
 
 const easyBtn = document.getElementById("difficulty-easy");
 const mediumBtn = document.getElementById("difficulty-medium");
 const hardBtn = document.getElementById("difficulty-hard");
 
 easyBtn.addEventListener("click", () => {
-  currentBoardSize = boardSize.easy;
-  currentTotalMines = totalMines.easy;
-  localStorage.setItem("newDifficulty", JSON.stringify(boardSize.easy));
+  sessionStorage.setItem("newDifficulty", JSON.stringify(boardSize.easy));
   location.replace(location.href);
 });
 
 mediumBtn.addEventListener("click", () => {
-  currentBoardSize = boardSize.medium;
-  currentTotalMines = totalMines.medium;
-  localStorage.setItem("newDifficulty", JSON.stringify(boardSize.medium));
+  sessionStorage.setItem("newDifficulty", JSON.stringify(boardSize.medium));
   location.replace(location.href);
 });
 
 hardBtn.addEventListener("click", () => {
-  currentBoardSize = boardSize.hard;
-  currentTotalMines = totalMines.hard;
-  localStorage.setItem("newDifficulty", JSON.stringify(boardSize.hard));
+  sessionStorage.setItem("newDifficulty", JSON.stringify(boardSize.hard));
   location.replace(location.href);
 });
 
@@ -107,7 +102,6 @@ board.forEach((row) => {
     boardElement.append(tile.element);
     tile.element.addEventListener("click", () => {
       revealTile(board, tile);
-      tile.element.style.setProperty("--tile-color", (mines.length * 45) % 360);
       checkGameEnd();
     });
     tile.element.addEventListener("contextmenu", (e) => {
