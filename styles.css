@@ -45,7 +45,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: min(0.2em, 2px) solid hsl(0, 0%, 73%);
+  border: 2px solid hsl(0, 0%, 73%);
   user-select: none;
 }
 

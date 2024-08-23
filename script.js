@@ -25,7 +25,7 @@ const totalMines = {
 };
 
 let currentBoardSize;
-let currentTotalMines = 10;
+let currentTotalMines;
 
 currentBoardSize = sessionStorage.getItem("newDifficulty")
   ? JSON.parse(sessionStorage.getItem("newDifficulty"))
@@ -38,14 +38,9 @@ switch (JSON.parse(sessionStorage.getItem("newDifficulty"))) {
   case boardSize.medium:
     currentTotalMines = totalMines.medium;
     break;
-  case boardSize.hard:
-    currentTotalMines = totalMines.hard;
-    break;
+  default:
+    currentTotalMines = 100;
 }
-
-console.log(currentBoardSize); //! ------------------------------------------------------- !
-console.log(currentTotalMines); //! ------------------------------------------------------ !
-console.log(JSON.parse(sessionStorage.getItem("newDifficulty"))); //! -------------------- !
 
 const easyBtn = document.getElementById("difficulty-easy");
 const mediumBtn = document.getElementById("difficulty-medium");
